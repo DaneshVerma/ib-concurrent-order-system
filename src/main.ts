@@ -1,21 +1,32 @@
+import { OrderQueue } from "./queue/order.queue";
 import { Order } from "./models/order.model";
-import { Product } from "./models/product.model";
 
-const order: Order = {
+const queue = new OrderQueue();
+
+const order1: Order = {
   id: "ORD-001",
   customerId: "CUS-001",
   productId: "PROD-001",
   quantity: 2,
   createdAt: new Date(),
-  status: "PENDING",
+  status: "PENDING"
 };
 
-const product: Product = {
-  id: "PROD-001",
-  name: "Laptop",
-  price: 50000,
-  stock: 20,
+const order2: Order = {
+  id: "ORD-002",
+  customerId: "CUS-002",
+  productId: "PROD-002",
+  quantity: 1,
+  createdAt: new Date(),
+  status: "PENDING"
 };
 
-console.log("Order:", order);
-console.log("Product:", product);
+queue.enqueue(order1);
+queue.enqueue(order2);
+
+console.log("Queue size:", queue.size());
+
+console.log("Dequeued:", queue.dequeue()?.id);
+console.log("Dequeued:", queue.dequeue()?.id);
+
+console.log("Is queue empty?", queue.isEmpty());
