@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-"scripts": {
-  "build": "tsc",
-  "start": "node dist/main.js",
-  "dev": "npm run build && npm start"
-},
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/main.js",
+    "dev": "npm run build && npm start"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
