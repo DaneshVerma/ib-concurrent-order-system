@@ -2,10 +2,10 @@
 import { Worker } from "node:worker_threads";
 import path from "node:path";
 
-import { Order } from "./models/order.model";
 import { OrderQueue } from "./queue/order.queue";
 import {
   MainToWorkerMessage,
+  WorkerState,
   WorkerToMainMessage
 } from "./workers/worker.types";
 import { InventoryManager } from "./inventory/inventory.manager";
@@ -63,13 +63,32 @@ const workerFile = path.join(
 
 const workers: Worker[] = [];
 
+const workerStates = new Map<Worker, WorkerState>();
+
 const startedAt = Date.now();
 
-
 function dispatchOrder(worker: Worker): void {
-  const order = queue.dequeue();
+  const state = workerStates.get(worker);
+
+  if (!state) {
+    throw new Error("Unknown worker");
+  }
+
+  let order;
+  while ((order = queue.dequeue())) {
+    if (inventoryManager.reserve(order.id, order.productId, order.quantity)) {
+      break;
+    }
+
+    order.status = "FAILED";
+    console.error(
+      `[MAIN] Order ${order.id} failed: insufficient inventory`
+    );
+  }
 
   if (!order) {
+    state.status = "STOPPING";
+
     const message: MainToWorkerMessage = {
       type: "STOP"
     };
@@ -80,13 +99,43 @@ function dispatchOrder(worker: Worker): void {
 
   order.status = "PROCESSING";
 
+  state.status = "BUSY";
+  state.currentOrderId = order.id;
+
   const message: MainToWorkerMessage = {
     type: "PROCESS",
-    order,
-    inventoryIndex: inventoryManager.getProductIndex(order.productId)
+    order
   };
 
-  worker.postMessage(message);
+  try {
+    worker.postMessage(message);
+  } catch (error) {
+    inventoryManager.release(order.id);
+    order.status = "FAILED";
+    state.status = "IDLE";
+    state.currentOrderId = undefined;
+    throw error;
+  }
+}
+
+function getOwnedOrder(worker: Worker, orderId: string) {
+  const state = workerStates.get(worker);
+  const order = orderMap.get(orderId);
+
+  if (
+    !state ||
+    state.status !== "BUSY" ||
+    state.currentOrderId !== orderId ||
+    !order ||
+    order.status !== "PROCESSING"
+  ) {
+    console.error(
+      `[MAIN] Invalid result from worker for order ${orderId}`
+    );
+    return undefined;
+  }
+
+  return order;
 }
 
 function handleWorkerMessage(
@@ -95,17 +144,32 @@ function handleWorkerMessage(
 ): void {
   switch (message.type) {
     case "READY": {
+      const state = workerStates.get(worker);
+
+      if (!state || state.status !== "IDLE") {
+        console.error("[MAIN] Unexpected READY message from worker");
+        break;
+      }
+
       dispatchOrder(worker);
       break;
     }
 
     case "ORDER_COMPLETED": {
-      const order = orderMap.get(message.orderId);
+      const order = getOwnedOrder(worker, message.orderId);
 
-      if (order) {
-        order.status = "COMPLETED";
+      if (!order) {
+        break;
       }
 
+      inventoryManager.commit(message.orderId);
+      order.status = "COMPLETED";
+      const state = workerStates.get(worker);
+
+      if (state) {
+        state.status = "IDLE";
+        state.currentOrderId = undefined;
+      }
       completedProcessingTimes.push(message.processingTime);
 
       console.log(
@@ -116,12 +180,20 @@ function handleWorkerMessage(
     }
 
     case "ORDER_FAILED": {
-      const order = orderMap.get(message.orderId);
+      const order = getOwnedOrder(worker, message.orderId);
 
-      if (order) {
-        order.status = "FAILED";
+      if (!order) {
+        break;
       }
 
+      inventoryManager.release(message.orderId);
+      order.status = "FAILED";
+      const state = workerStates.get(worker);
+
+      if (state) {
+        state.status = "IDLE";
+        state.currentOrderId = undefined;
+      }
       failedProcessingTimes.push(message.processingTime);
 
       console.error(
@@ -139,12 +211,13 @@ function startWorkers(): Promise<void> {
     let hasFailed = false;
 
     for (let i = 0; i < WORKER_COUNT; i++) {
-      const worker = new Worker(workerFile, {
-        workerData: {
-          inventoryBuffer: inventoryManager.getSharedBuffer()
-        }
-      });
+      const worker = new Worker(workerFile);
+
       workers.push(worker);
+
+      workerStates.set(worker, {
+        status: "IDLE"
+      });
 
       worker.on("message", (message: WorkerToMainMessage) => {
         handleWorkerMessage(worker, message);

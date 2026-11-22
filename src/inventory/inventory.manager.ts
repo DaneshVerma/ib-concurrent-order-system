@@ -1,6 +1,12 @@
 
 import { Product } from "../models/product.model";
 
+export interface Reservation {
+  orderId: string;
+  productId: string;
+  quantity: number;
+}
+
 export interface InventorySnapshot {
   productId: string;
   stock: number;
@@ -9,69 +15,79 @@ export interface InventorySnapshot {
 }
 
 export class InventoryManager {
-  private readonly buffer: SharedArrayBuffer;
-  private readonly inventory: Int32Array;
-  private readonly productIndexes: Map<string, number>;
-
-  private static readonly SLOTS_PER_PRODUCT = 3;
+  private products = new Map<string, Product>();
+  private reservations = new Map<string, Reservation>();
 
   constructor(products: Product[]) {
-    this.buffer = new SharedArrayBuffer(
-      products.length *
-        InventoryManager.SLOTS_PER_PRODUCT *
-        Int32Array.BYTES_PER_ELEMENT
-    );
-
-    this.inventory = new Int32Array(this.buffer);
-    this.productIndexes = new Map();
-
-    products.forEach((product, index) => {
-      const baseIndex =
-        index * InventoryManager.SLOTS_PER_PRODUCT;
-
-      this.productIndexes.set(product.id, baseIndex);
-
-      // Slot 0: Physical stock
-      Atomics.store(this.inventory, baseIndex, product.stock);
-
-      // Slot 1: Reserved stock
-      Atomics.store(this.inventory, baseIndex + 1, 0);
-
-      // Slot 2: Lock
-      Atomics.store(this.inventory, baseIndex + 2, 0);
-    });
+    for (const product of products) {
+      this.products.set(product.id, { ...product });
+    }
   }
 
-  getSharedBuffer(): SharedArrayBuffer {
-    return this.buffer;
-  }
+  reserve(
+    orderId: string,
+    productId: string,
+    quantity: number
+  ): boolean {
+    const product = this.products.get(productId);
 
-  getProductIndex(productId: string): number {
-    const index = this.productIndexes.get(productId);
-
-    if (index === undefined) {
-      throw new Error(`Unknown product: ${productId}`);
+    if (
+      !product ||
+      !Number.isInteger(quantity) ||
+      quantity <= 0 ||
+      this.reservations.has(orderId)
+    ) {
+      return false;
     }
 
-    return index;
+    let reserved = 0;
+    for (const reservation of this.reservations.values()) {
+      if (reservation.productId === productId) {
+        reserved += reservation.quantity;
+      }
+    }
+
+    if (product.stock - reserved < quantity) {
+      return false;
+    }
+
+    this.reservations.set(orderId, { orderId, productId, quantity });
+    return true;
+  }
+
+  commit(orderId: string): void {
+    const reservation = this.reservations.get(orderId);
+
+    if (!reservation) {
+      throw new Error(`Reservation not found: ${orderId}`);
+    }
+
+    const product = this.products.get(reservation.productId);
+
+    if (!product) {
+      throw new Error(`Product not found: ${reservation.productId}`);
+    }
+
+    product.stock -= reservation.quantity;
+    this.reservations.delete(orderId);
+  }
+
+  release(orderId: string): void {
+    this.reservations.delete(orderId);
   }
 
   getSnapshot(): InventorySnapshot[] {
-    return Array.from(this.productIndexes.entries()).map(
-      ([productId, baseIndex]) => {
-        const stock = Atomics.load(this.inventory, baseIndex);
-        const reserved = Atomics.load(
-          this.inventory,
-          baseIndex + 1
-        );
+    return Array.from(this.products.values()).map(product => {
+      const reserved = Array.from(this.reservations.values())
+        .filter(item => item.productId === product.id)
+        .reduce((total, item) => total + item.quantity, 0);
 
-        return {
-          productId,
-          stock,
-          reserved,
-          available: stock - reserved
-        };
-      }
-    );
+      return {
+        productId: product.id,
+        stock: product.stock,
+        reserved,
+        available: product.stock - reserved
+      };
+    });
   }
 }
