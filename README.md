@@ -2,25 +2,27 @@
 
 ## Project Overview
 
-This Node.js and TypeScript application simulates an order-processing system for an IB Group technical assignment. It generates orders for 100 customers, places them in an in-memory queue, and processes eligible orders concurrently with Node.js worker threads. The main thread remains the authoritative owner of order, inventory, queue, and worker-state data.
+This Node.js and TypeScript application simulates concurrent order processing for an IB Group technical assignment. It generates orders for 100 customers, queues them in memory, validates stock, and processes eligible orders with worker threads.
+
+The main thread owns all mutable application state. `WorkerManager` runs in that main thread and coordinates workers; workers receive order copies and report results through messages.
 
 ## Features
 
-- Generates 1–5 orders for each of 100 simulated customers.
-- Starts six worker threads (`WORKER_COUNT = 6`) to process orders concurrently.
-- Uses a FIFO in-memory queue with constant-time dequeue via a moving head index.
-- Reserves stock before dispatching an order; orders that cannot be reserved are marked `FAILED` without reaching a worker.
-- Tracks each order through `PENDING`, `PROCESSING`, `COMPLETED`, and `FAILED` states.
-- Maintains per-worker `IDLE`, `BUSY`, `STOPPING`, and `EXITED` state, including the active order ID while busy.
-- Detects worker exits, releases an active reservation, and requeues a still-processing order.
-- Prints processing-time metrics and a final inventory snapshot.
+- Generates 1-5 orders for each of 100 simulated customers.
+- Processes orders with six worker threads (`WORKER_COUNT = 6`).
+- Uses a FIFO in-memory queue with a moving head index for efficient dequeueing.
+- Reserves inventory before dispatch and rejects orders that cannot be fulfilled.
+- Tracks `PENDING`, `PROCESSING`, `COMPLETED`, and `FAILED` order states.
+- Tracks worker states: `IDLE`, `BUSY`, `STOPPING`, and `EXITED`.
+- Releases and requeues in-flight work when a worker exits unexpectedly.
+- Prints processing metrics, a final order summary, and an inventory snapshot.
 
 ## Tech Stack
 
 - Node.js worker threads (`node:worker_threads`)
 - TypeScript 7.0.2
 - Node.js type definitions 26.6.6
-- CommonJS output targeting ES2022
+- CommonJS modules targeting ES2022
 - npm
 
 The project has no runtime npm dependencies.
@@ -30,31 +32,33 @@ The project has no runtime npm dependencies.
 ```text
 .
 ├── src/
-│   ├── main.ts                     # Main-thread orchestration and reporting
+│   ├── main.ts                     # Application setup, orchestration, report output
 │   ├── inventory/
-│   │   └── inventory.manager.ts    # Stock and reservation management
+│   │   └── inventory.manager.ts    # Product stock and reservations
 │   ├── models/
-│   │   ├── customer.model.ts       # Customer shape
-│   │   ├── order.model.ts          # Order shape and lifecycle statuses
-│   │   └── product.model.ts        # Product shape
+│   │   ├── customer.model.ts
+│   │   ├── order.model.ts
+│   │   └── product.model.ts
 │   ├── queue/
-│   │   └── order.queue.ts          # FIFO in-memory order queue
+│   │   └── order.queue.ts          # FIFO order queue
 │   ├── services/
-│   │   └── order-generator.ts      # Random customer order generation
+│   │   ├── order-generator.ts      # Customer and order generation
+│   │   └── report.service.ts       # Final report calculations
 │   └── workers/
-│       ├── order.worker.ts         # Worker processing loop
-│       └── worker.types.ts         # Main/worker messages and worker state
+│       ├── order.worker.ts         # Worker-side simulated processing
+│       ├── worker.manager.ts       # Main-thread worker lifecycle management
+│       └── worker.types.ts         # Main/worker message and state types
 ├── logs/
-│   ├── sample-run.log              # Stored normal-run output
-│   └── crash-recovery.log          # Stored crash-recovery run output
+│   ├── sample-run.log
+│   └── crash-recovery.log
 ├── package.json
 └── tsconfig.json
 ```
 
 ## Prerequisites
 
-- Node.js 18 or later. The compiler target is ES2022 and the application uses `node:worker_threads`. The project does not declare an `engines` field; Node.js 18+ is the practical baseline.
-- npm, supplied with Node.js.
+- Node.js 18 or later. The compiler targets ES2022 and the application uses worker threads. `package.json` does not declare an `engines` field.
+- npm, included with Node.js.
 
 ## Installation and Execution
 
@@ -66,80 +70,78 @@ npm run build
 npm start
 ```
 
-For a build followed by execution in one command:
+To build and run in one command:
 
 ```bash
 npm run dev
 ```
 
-`build` runs `tsc`, `start` runs `node dist/main.js`, and `dev` runs `npm run build && npm start`.
+`build` runs `tsc`, `start` runs `node dist/main.js`, and `dev` runs the build before starting the application.
 
 ## Architecture and Design Decisions
 
+### Application composition
+
+`main.ts` creates the `OrderQueue`, generated orders, `InventoryManager`, and `WorkerManager`. It starts the manager, obtains processing metrics after all workers exit, delegates final calculations to `createFinalReport`, and prints the final report.
+
+`WorkerManager` receives the queue, inventory manager, orders, and worker count through its constructor. It owns worker references, worker-state tracking, the order lookup map, and elapsed-time collections. Its `start()` method resolves only after every configured worker has exited.
+
 ### Order generation and queueing
 
-`generateOrders(100)` creates customers with IDs such as `CUS-001`. For every customer it randomly creates 1–5 orders, each with a product selected from `PROD-001` through `PROD-003`, a quantity of 1–5, and initial status `PENDING`. The main thread enqueues every generated order before it starts workers.
+`generateOrders(100)` creates customers with IDs such as `CUS-001`. Each customer produces 1-5 orders. Orders use one of three product IDs, request a quantity from 1-5, and begin with `PENDING` status.
 
-`OrderQueue` appends at the tail and dequeues from a `head` index, preserving FIFO order without repeatedly shifting the array. Requeued crash-recovery orders are appended to the tail.
+The main thread enqueues all generated orders before starting workers. `OrderQueue` appends at the tail and advances a head index when dequeuing, so it preserves FIFO order without repeated array shifting. Recovered orders are appended to the queue tail.
 
 ### Dispatch and worker communication
 
-The main thread creates six `Worker` instances. A newly started worker sends `READY`; after processing an order it reports either `ORDER_COMPLETED` or `ORDER_FAILED`, then sends `READY` again. The main thread responds to `READY` by dispatching the next reservable order.
+Workers send `READY` at startup and after each processing attempt. `WorkerManager` dispatches an order only to a worker whose tracked state is `IDLE`.
 
-Before dispatch, the main thread calls `inventoryManager.reserve(order.id, order.productId, order.quantity)`. A successful reservation changes the order to `PROCESSING`, then records the worker as `BUSY` and stores `currentOrderId` before sending a `PROCESS` message. A failed reservation changes the order to `FAILED` and logs insufficient inventory without sending it to a worker.
+Before sending `PROCESS`, it reserves stock, sets the order to `PROCESSING`, records the worker as `BUSY`, and stores `currentOrderId`. Orders that cannot reserve inventory become `FAILED` and are not sent to a worker.
 
-Workers simulate work with a random 2–5 second delay. They return only a result message containing an order ID and elapsed time; they do not mutate the authoritative order or inventory state.
+Workers simulate processing for a random 2-5 seconds. They send either `ORDER_COMPLETED` or `ORDER_FAILED`, then send `READY`. The protocol also supports `STOP`, which causes the worker to close its message port.
 
-The queue, `InventoryManager`, order map, and worker-state map are exclusively owned and mutated by the main thread. Workers receive structured-cloned order data through `postMessage`. This single-owner model avoids concurrent mutations of those structures, so it does not require shared memory, `SharedArrayBuffer`, `Atomics`, or mutexes.
+The queue, inventory manager, order map, and worker-state map are mutated only on the main thread. Orders are transferred to workers through `postMessage`, so workers do not share these data structures. This design avoids concurrent mutation without `SharedArrayBuffer`, `Atomics`, or mutexes.
 
-### Inventory and result handling
+### Inventory and outcome handling
 
-`InventoryManager` starts with three products: 50 laptops, 100 mice, and 75 keyboards. `reserve` validates the product and positive integer quantity, rejects duplicate reservations for an order, totals existing reservations for the product, and only creates a new reservation when unreserved stock is sufficient.
+`InventoryManager` starts with 50 laptops, 100 mice, and 75 keyboards. Reservation validates the product and positive integer quantity, accounts for outstanding reservations, and prevents reserved stock from exceeding physical stock.
 
-On an accepted completion result, the main thread validates that the reporting worker owns the matching `PROCESSING` order, commits the reservation by deducting stock, marks the order `COMPLETED`, clears the worker’s active order, and stores the processing time. On an accepted failure result, it releases the reservation without deducting stock, marks the order `FAILED`, clears the worker’s active order, and stores the failed-attempt time. Validating the worker state and current order prevents a stale or duplicate result from being handled as the current assignment.
+Before accepting a worker result, `WorkerManager` validates that the reporting worker is `BUSY`, owns the same `currentOrderId`, and that the order is still `PROCESSING`. This prevents a stale or duplicate result from being handled as the active assignment.
 
-### Worker state, recovery, and shutdown
+- Completion commits the reservation, deducts stock, marks the order `COMPLETED`, clears `currentOrderId`, and records successful processing time.
+- Worker-reported failure releases the reservation, marks the order `FAILED`, clears `currentOrderId`, and records failed-attempt time.
 
-`WorkerState` stores a status of `IDLE`, `BUSY`, `STOPPING`, or `EXITED`, plus an optional `currentOrderId`. The exit handler detects a worker exit. If its recorded order is still `PROCESSING`, the main thread releases its reservation, returns the order to `PENDING`, and requeues it. It then marks that worker `EXITED` and asks remaining idle workers to dispatch queued work.
+### Recovery and shutdown
 
-The application does not create a replacement worker after an exit. It therefore recovers the in-flight order when capacity remains, but continues with fewer workers after a crash.
+The worker exit handler checks whether the exited worker owned an order still marked `PROCESSING`. If so, it releases the reservation, restores the order to `PENDING`, and requeues it. Remaining idle workers are then asked to dispatch queued work.
 
-When the queue is empty, an idle worker waits while another worker is `BUSY`. Once no workers are busy, the main thread sends `STOP` to idle workers. A worker handles `STOP` by closing its message port; the main thread resolves the run after all six worker threads have exited.
+The application does not replace a worker that exits. Processing continues with remaining workers. When the queue is empty, idle workers wait while any worker remains `BUSY`; after all work is complete, `WorkerManager` sends `STOP` to idle workers and resolves after all workers have exited.
 
 ## Order Lifecycle
 
 ```text
-PENDING → PROCESSING → COMPLETED
-                     └→ FAILED
+PENDING -> PROCESSING -> COMPLETED
+                      -> FAILED
 ```
 
-An order moves from `PENDING` to `PROCESSING` only after inventory reservation succeeds. An inventory shortage produces `PENDING → FAILED` directly. A worker-reported failure follows `PROCESSING → FAILED` after reservation release.
+Inventory shortage follows `PENDING -> FAILED` directly. A worker crash while an order is processing follows `PROCESSING -> PENDING` after its reservation is released and the order is requeued.
 
-If a worker exits while its recorded order is still `PROCESSING`, the main thread releases the reservation, restores the order to `PENDING`, and appends it to the queue for another live worker. This is requeueing, not a durable exactly-once guarantee: the system is in memory and a crash can occur after work has started but before a result has reached the main thread.
+## Final Reporting
 
-## Inventory Management
-
-Reservations prevent multiple dispatched orders from claiming the same stock. Available inventory is calculated as physical stock minus all outstanding reservations.
-
-- **Reservation:** validates stock before worker dispatch and records the order’s product and quantity.
-- **Commit:** after a validated completion, deducts the reserved quantity from stock and removes the reservation.
-- **Release:** after a worker-reported failure or worker exit, removes the reservation without changing stock.
-
-This protects inventory consistency within one process because only the main thread performs these operations.
+`report.service.ts` calculates completed, failed, and pending totals, plus successful and failed worker-attempt averages. `main.ts` supplies total execution time and the final inventory snapshot.
 
 ## Assumptions and Limitations
 
-- All data is in memory. Orders, reservations, results, and worker state are lost when the process exits.
-- The simulation has no database, payment flow, HTTP API, or other external side effects. It cannot provide distributed idempotency or exactly-once delivery for such effects.
-- Result acceptance is guarded by the worker’s current assignment and the order’s `PROCESSING` status. This prevents duplicate terminal handling in the live process, but is not a persistent exactly-once protocol.
-- Requeueing an order after a worker exit makes it eligible for another worker; it does not replace the crashed worker or guarantee that the interrupted work had no external effect.
-- Processing time is random and simulated. The failed-worker average includes only worker-reported failures; stock-reservation failures have no worker processing time.
-- The repository does not declare a Node.js version in `package.json`.
-
+- All state is in memory and is lost when the process exits.
+- The simulation has no database, API, payment flow, or other external side effects.
+- Requeueing after a worker exit is not a durable exactly-once delivery guarantee. An interrupted worker may have started work before its result reaches the main thread.
+- Result validation prevents duplicate terminal handling during the running process, but does not persist idempotency across process restarts.
+- Failed inventory reservations have no worker processing time; the failed-attempt average includes only worker-reported failures.
+- A crashed worker is not automatically replaced.
 
 ## Sample Output
 
-The stored `logs/sample-run.log` contains this representative final report. Counts and timings vary because order generation and processing times are random.
+Order counts and timings vary because orders and processing delays are random. A stored run in `logs/sample-run.log` reports, for example:
 
 ```text
 ========== FINAL REPORT ==========
@@ -150,19 +152,12 @@ Failed: 223
 Pending: 0
 Average successful processing time: 3472.94ms
 Average failed worker processing time: 0.00ms
-Total execution time: 48026ms
-
-Final Inventory:
-PROD-001  stock: 0  reserved: 0  available: 0
-PROD-002  stock: 0  reserved: 0  available: 0
-PROD-003  stock: 0  reserved: 0  available: 0
 ```
 
 ## Future Improvements
 
-- Persist orders, reservations, and terminal results in a database.
-- Add bounded retries, retry classification, and a dead-letter flow for repeatedly failing work.
-- Replace failed workers to maintain the configured processing capacity.
-- Add graceful process-signal handling and a timeout for unresponsive workers.
-- Add automated tests for inventory invariants, result ownership, crash recovery, and shutdown coordination.
-- Capture structured logs and expose metrics for queue depth, throughput, failures, and worker utilization.
+- Persist orders, reservations, and terminal outcomes.
+- Replace crashed workers to maintain configured capacity.
+- Add automated tests for inventory invariants, result ownership, recovery, and shutdown.
+- Add bounded retries and a dead-letter flow for failures that should be retried.
+- Add structured application logging and operational metrics.
