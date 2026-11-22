@@ -94,6 +94,8 @@ The main thread enqueues all generated orders before starting workers. `OrderQue
 
 ### Dispatch and worker communication
 
+![Normal Execution](./src/docs/screenshot/thread-execution-flow.png)
+
 Workers send `READY` at startup and after each processing attempt. `WorkerManager` dispatches an order only to a worker whose tracked state is `IDLE`.
 
 Before sending `PROCESS`, it reserves stock, sets the order to `PROCESSING`, records the worker as `BUSY`, and stores `currentOrderId`. Orders that cannot reserve inventory become `FAILED` and are not sent to a worker.
