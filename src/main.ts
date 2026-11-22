@@ -309,18 +309,18 @@ function startWorkers(): Promise<void> {
     }
 
     // Temporary crash-recovery test
-    setTimeout(() => {
-      const busyWorker = [...workerStates.entries()].find(
-        ([, state]) => state.status === "BUSY"
-      )?.[0];
+    // setTimeout(() => {
+    //   const busyWorker = [...workerStates.entries()].find(
+    //     ([, state]) => state.status === "BUSY"
+    //   )?.[0];
 
-      if (busyWorker) {
-        console.log("[TEST] Simulating worker crash");
-        void busyWorker.terminate();
-      } else {
-        console.log("[TEST] No busy worker found");
-      }
-    }, 1000);
+    //   if (busyWorker) {
+    //     console.log("[TEST] Simulating worker crash");
+    //     void busyWorker.terminate();
+    //   } else {
+    //     console.log("[TEST] No busy worker found");
+    //   }
+    // }, 1000);
 
   });
 }

@@ -1,0 +1,815 @@
+
+> ib-concurrent-order-system@1.0.0 dev
+> npm run build && npm start
+
+
+> ib-concurrent-order-system@1.0.0 build
+> tsc
+
+
+> ib-concurrent-order-system@1.0.0 start
+> node dist/main.js
+
+[MAIN] Generated 302 orders from 100 customers
+[QUEUE] Order ORD-0001 added. Queue size: 1
+[QUEUE] Order ORD-0002 added. Queue size: 2
+[QUEUE] Order ORD-0003 added. Queue size: 3
+[QUEUE] Order ORD-0004 added. Queue size: 4
+[QUEUE] Order ORD-0005 added. Queue size: 5
+[QUEUE] Order ORD-0006 added. Queue size: 6
+[QUEUE] Order ORD-0007 added. Queue size: 7
+[QUEUE] Order ORD-0008 added. Queue size: 8
+[QUEUE] Order ORD-0009 added. Queue size: 9
+[QUEUE] Order ORD-0010 added. Queue size: 10
+[QUEUE] Order ORD-0011 added. Queue size: 11
+[QUEUE] Order ORD-0012 added. Queue size: 12
+[QUEUE] Order ORD-0013 added. Queue size: 13
+[QUEUE] Order ORD-0014 added. Queue size: 14
+[QUEUE] Order ORD-0015 added. Queue size: 15
+[QUEUE] Order ORD-0016 added. Queue size: 16
+[QUEUE] Order ORD-0017 added. Queue size: 17
+[QUEUE] Order ORD-0018 added. Queue size: 18
+[QUEUE] Order ORD-0019 added. Queue size: 19
+[QUEUE] Order ORD-0020 added. Queue size: 20
+[QUEUE] Order ORD-0021 added. Queue size: 21
+[QUEUE] Order ORD-0022 added. Queue size: 22
+[QUEUE] Order ORD-0023 added. Queue size: 23
+[QUEUE] Order ORD-0024 added. Queue size: 24
+[QUEUE] Order ORD-0025 added. Queue size: 25
+[QUEUE] Order ORD-0026 added. Queue size: 26
+[QUEUE] Order ORD-0027 added. Queue size: 27
+[QUEUE] Order ORD-0028 added. Queue size: 28
+[QUEUE] Order ORD-0029 added. Queue size: 29
+[QUEUE] Order ORD-0030 added. Queue size: 30
+[QUEUE] Order ORD-0031 added. Queue size: 31
+[QUEUE] Order ORD-0032 added. Queue size: 32
+[QUEUE] Order ORD-0033 added. Queue size: 33
+[QUEUE] Order ORD-0034 added. Queue size: 34
+[QUEUE] Order ORD-0035 added. Queue size: 35
+[QUEUE] Order ORD-0036 added. Queue size: 36
+[QUEUE] Order ORD-0037 added. Queue size: 37
+[QUEUE] Order ORD-0038 added. Queue size: 38
+[QUEUE] Order ORD-0039 added. Queue size: 39
+[QUEUE] Order ORD-0040 added. Queue size: 40
+[QUEUE] Order ORD-0041 added. Queue size: 41
+[QUEUE] Order ORD-0042 added. Queue size: 42
+[QUEUE] Order ORD-0043 added. Queue size: 43
+[QUEUE] Order ORD-0044 added. Queue size: 44
+[QUEUE] Order ORD-0045 added. Queue size: 45
+[QUEUE] Order ORD-0046 added. Queue size: 46
+[QUEUE] Order ORD-0047 added. Queue size: 47
+[QUEUE] Order ORD-0048 added. Queue size: 48
+[QUEUE] Order ORD-0049 added. Queue size: 49
+[QUEUE] Order ORD-0050 added. Queue size: 50
+[QUEUE] Order ORD-0051 added. Queue size: 51
+[QUEUE] Order ORD-0052 added. Queue size: 52
+[QUEUE] Order ORD-0053 added. Queue size: 53
+[QUEUE] Order ORD-0054 added. Queue size: 54
+[QUEUE] Order ORD-0055 added. Queue size: 55
+[QUEUE] Order ORD-0056 added. Queue size: 56
+[QUEUE] Order ORD-0057 added. Queue size: 57
+[QUEUE] Order ORD-0058 added. Queue size: 58
+[QUEUE] Order ORD-0059 added. Queue size: 59
+[QUEUE] Order ORD-0060 added. Queue size: 60
+[QUEUE] Order ORD-0061 added. Queue size: 61
+[QUEUE] Order ORD-0062 added. Queue size: 62
+[QUEUE] Order ORD-0063 added. Queue size: 63
+[QUEUE] Order ORD-0064 added. Queue size: 64
+[QUEUE] Order ORD-0065 added. Queue size: 65
+[QUEUE] Order ORD-0066 added. Queue size: 66
+[QUEUE] Order ORD-0067 added. Queue size: 67
+[QUEUE] Order ORD-0068 added. Queue size: 68
+[QUEUE] Order ORD-0069 added. Queue size: 69
+[QUEUE] Order ORD-0070 added. Queue size: 70
+[QUEUE] Order ORD-0071 added. Queue size: 71
+[QUEUE] Order ORD-0072 added. Queue size: 72
+[QUEUE] Order ORD-0073 added. Queue size: 73
+[QUEUE] Order ORD-0074 added. Queue size: 74
+[QUEUE] Order ORD-0075 added. Queue size: 75
+[QUEUE] Order ORD-0076 added. Queue size: 76
+[QUEUE] Order ORD-0077 added. Queue size: 77
+[QUEUE] Order ORD-0078 added. Queue size: 78
+[QUEUE] Order ORD-0079 added. Queue size: 79
+[QUEUE] Order ORD-0080 added. Queue size: 80
+[QUEUE] Order ORD-0081 added. Queue size: 81
+[QUEUE] Order ORD-0082 added. Queue size: 82
+[QUEUE] Order ORD-0083 added. Queue size: 83
+[QUEUE] Order ORD-0084 added. Queue size: 84
+[QUEUE] Order ORD-0085 added. Queue size: 85
+[QUEUE] Order ORD-0086 added. Queue size: 86
+[QUEUE] Order ORD-0087 added. Queue size: 87
+[QUEUE] Order ORD-0088 added. Queue size: 88
+[QUEUE] Order ORD-0089 added. Queue size: 89
+[QUEUE] Order ORD-0090 added. Queue size: 90
+[QUEUE] Order ORD-0091 added. Queue size: 91
+[QUEUE] Order ORD-0092 added. Queue size: 92
+[QUEUE] Order ORD-0093 added. Queue size: 93
+[QUEUE] Order ORD-0094 added. Queue size: 94
+[QUEUE] Order ORD-0095 added. Queue size: 95
+[QUEUE] Order ORD-0096 added. Queue size: 96
+[QUEUE] Order ORD-0097 added. Queue size: 97
+[QUEUE] Order ORD-0098 added. Queue size: 98
+[QUEUE] Order ORD-0099 added. Queue size: 99
+[QUEUE] Order ORD-0100 added. Queue size: 100
+[QUEUE] Order ORD-0101 added. Queue size: 101
+[QUEUE] Order ORD-0102 added. Queue size: 102
+[QUEUE] Order ORD-0103 added. Queue size: 103
+[QUEUE] Order ORD-0104 added. Queue size: 104
+[QUEUE] Order ORD-0105 added. Queue size: 105
+[QUEUE] Order ORD-0106 added. Queue size: 106
+[QUEUE] Order ORD-0107 added. Queue size: 107
+[QUEUE] Order ORD-0108 added. Queue size: 108
+[QUEUE] Order ORD-0109 added. Queue size: 109
+[QUEUE] Order ORD-0110 added. Queue size: 110
+[QUEUE] Order ORD-0111 added. Queue size: 111
+[QUEUE] Order ORD-0112 added. Queue size: 112
+[QUEUE] Order ORD-0113 added. Queue size: 113
+[QUEUE] Order ORD-0114 added. Queue size: 114
+[QUEUE] Order ORD-0115 added. Queue size: 115
+[QUEUE] Order ORD-0116 added. Queue size: 116
+[QUEUE] Order ORD-0117 added. Queue size: 117
+[QUEUE] Order ORD-0118 added. Queue size: 118
+[QUEUE] Order ORD-0119 added. Queue size: 119
+[QUEUE] Order ORD-0120 added. Queue size: 120
+[QUEUE] Order ORD-0121 added. Queue size: 121
+[QUEUE] Order ORD-0122 added. Queue size: 122
+[QUEUE] Order ORD-0123 added. Queue size: 123
+[QUEUE] Order ORD-0124 added. Queue size: 124
+[QUEUE] Order ORD-0125 added. Queue size: 125
+[QUEUE] Order ORD-0126 added. Queue size: 126
+[QUEUE] Order ORD-0127 added. Queue size: 127
+[QUEUE] Order ORD-0128 added. Queue size: 128
+[QUEUE] Order ORD-0129 added. Queue size: 129
+[QUEUE] Order ORD-0130 added. Queue size: 130
+[QUEUE] Order ORD-0131 added. Queue size: 131
+[QUEUE] Order ORD-0132 added. Queue size: 132
+[QUEUE] Order ORD-0133 added. Queue size: 133
+[QUEUE] Order ORD-0134 added. Queue size: 134
+[QUEUE] Order ORD-0135 added. Queue size: 135
+[QUEUE] Order ORD-0136 added. Queue size: 136
+[QUEUE] Order ORD-0137 added. Queue size: 137
+[QUEUE] Order ORD-0138 added. Queue size: 138
+[QUEUE] Order ORD-0139 added. Queue size: 139
+[QUEUE] Order ORD-0140 added. Queue size: 140
+[QUEUE] Order ORD-0141 added. Queue size: 141
+[QUEUE] Order ORD-0142 added. Queue size: 142
+[QUEUE] Order ORD-0143 added. Queue size: 143
+[QUEUE] Order ORD-0144 added. Queue size: 144
+[QUEUE] Order ORD-0145 added. Queue size: 145
+[QUEUE] Order ORD-0146 added. Queue size: 146
+[QUEUE] Order ORD-0147 added. Queue size: 147
+[QUEUE] Order ORD-0148 added. Queue size: 148
+[QUEUE] Order ORD-0149 added. Queue size: 149
+[QUEUE] Order ORD-0150 added. Queue size: 150
+[QUEUE] Order ORD-0151 added. Queue size: 151
+[QUEUE] Order ORD-0152 added. Queue size: 152
+[QUEUE] Order ORD-0153 added. Queue size: 153
+[QUEUE] Order ORD-0154 added. Queue size: 154
+[QUEUE] Order ORD-0155 added. Queue size: 155
+[QUEUE] Order ORD-0156 added. Queue size: 156
+[QUEUE] Order ORD-0157 added. Queue size: 157
+[QUEUE] Order ORD-0158 added. Queue size: 158
+[QUEUE] Order ORD-0159 added. Queue size: 159
+[QUEUE] Order ORD-0160 added. Queue size: 160
+[QUEUE] Order ORD-0161 added. Queue size: 161
+[QUEUE] Order ORD-0162 added. Queue size: 162
+[QUEUE] Order ORD-0163 added. Queue size: 163
+[QUEUE] Order ORD-0164 added. Queue size: 164
+[QUEUE] Order ORD-0165 added. Queue size: 165
+[QUEUE] Order ORD-0166 added. Queue size: 166
+[QUEUE] Order ORD-0167 added. Queue size: 167
+[QUEUE] Order ORD-0168 added. Queue size: 168
+[QUEUE] Order ORD-0169 added. Queue size: 169
+[QUEUE] Order ORD-0170 added. Queue size: 170
+[QUEUE] Order ORD-0171 added. Queue size: 171
+[QUEUE] Order ORD-0172 added. Queue size: 172
+[QUEUE] Order ORD-0173 added. Queue size: 173
+[QUEUE] Order ORD-0174 added. Queue size: 174
+[QUEUE] Order ORD-0175 added. Queue size: 175
+[QUEUE] Order ORD-0176 added. Queue size: 176
+[QUEUE] Order ORD-0177 added. Queue size: 177
+[QUEUE] Order ORD-0178 added. Queue size: 178
+[QUEUE] Order ORD-0179 added. Queue size: 179
+[QUEUE] Order ORD-0180 added. Queue size: 180
+[QUEUE] Order ORD-0181 added. Queue size: 181
+[QUEUE] Order ORD-0182 added. Queue size: 182
+[QUEUE] Order ORD-0183 added. Queue size: 183
+[QUEUE] Order ORD-0184 added. Queue size: 184
+[QUEUE] Order ORD-0185 added. Queue size: 185
+[QUEUE] Order ORD-0186 added. Queue size: 186
+[QUEUE] Order ORD-0187 added. Queue size: 187
+[QUEUE] Order ORD-0188 added. Queue size: 188
+[QUEUE] Order ORD-0189 added. Queue size: 189
+[QUEUE] Order ORD-0190 added. Queue size: 190
+[QUEUE] Order ORD-0191 added. Queue size: 191
+[QUEUE] Order ORD-0192 added. Queue size: 192
+[QUEUE] Order ORD-0193 added. Queue size: 193
+[QUEUE] Order ORD-0194 added. Queue size: 194
+[QUEUE] Order ORD-0195 added. Queue size: 195
+[QUEUE] Order ORD-0196 added. Queue size: 196
+[QUEUE] Order ORD-0197 added. Queue size: 197
+[QUEUE] Order ORD-0198 added. Queue size: 198
+[QUEUE] Order ORD-0199 added. Queue size: 199
+[QUEUE] Order ORD-0200 added. Queue size: 200
+[QUEUE] Order ORD-0201 added. Queue size: 201
+[QUEUE] Order ORD-0202 added. Queue size: 202
+[QUEUE] Order ORD-0203 added. Queue size: 203
+[QUEUE] Order ORD-0204 added. Queue size: 204
+[QUEUE] Order ORD-0205 added. Queue size: 205
+[QUEUE] Order ORD-0206 added. Queue size: 206
+[QUEUE] Order ORD-0207 added. Queue size: 207
+[QUEUE] Order ORD-0208 added. Queue size: 208
+[QUEUE] Order ORD-0209 added. Queue size: 209
+[QUEUE] Order ORD-0210 added. Queue size: 210
+[QUEUE] Order ORD-0211 added. Queue size: 211
+[QUEUE] Order ORD-0212 added. Queue size: 212
+[QUEUE] Order ORD-0213 added. Queue size: 213
+[QUEUE] Order ORD-0214 added. Queue size: 214
+[QUEUE] Order ORD-0215 added. Queue size: 215
+[QUEUE] Order ORD-0216 added. Queue size: 216
+[QUEUE] Order ORD-0217 added. Queue size: 217
+[QUEUE] Order ORD-0218 added. Queue size: 218
+[QUEUE] Order ORD-0219 added. Queue size: 219
+[QUEUE] Order ORD-0220 added. Queue size: 220
+[QUEUE] Order ORD-0221 added. Queue size: 221
+[QUEUE] Order ORD-0222 added. Queue size: 222
+[QUEUE] Order ORD-0223 added. Queue size: 223
+[QUEUE] Order ORD-0224 added. Queue size: 224
+[QUEUE] Order ORD-0225 added. Queue size: 225
+[QUEUE] Order ORD-0226 added. Queue size: 226
+[QUEUE] Order ORD-0227 added. Queue size: 227
+[QUEUE] Order ORD-0228 added. Queue size: 228
+[QUEUE] Order ORD-0229 added. Queue size: 229
+[QUEUE] Order ORD-0230 added. Queue size: 230
+[QUEUE] Order ORD-0231 added. Queue size: 231
+[QUEUE] Order ORD-0232 added. Queue size: 232
+[QUEUE] Order ORD-0233 added. Queue size: 233
+[QUEUE] Order ORD-0234 added. Queue size: 234
+[QUEUE] Order ORD-0235 added. Queue size: 235
+[QUEUE] Order ORD-0236 added. Queue size: 236
+[QUEUE] Order ORD-0237 added. Queue size: 237
+[QUEUE] Order ORD-0238 added. Queue size: 238
+[QUEUE] Order ORD-0239 added. Queue size: 239
+[QUEUE] Order ORD-0240 added. Queue size: 240
+[QUEUE] Order ORD-0241 added. Queue size: 241
+[QUEUE] Order ORD-0242 added. Queue size: 242
+[QUEUE] Order ORD-0243 added. Queue size: 243
+[QUEUE] Order ORD-0244 added. Queue size: 244
+[QUEUE] Order ORD-0245 added. Queue size: 245
+[QUEUE] Order ORD-0246 added. Queue size: 246
+[QUEUE] Order ORD-0247 added. Queue size: 247
+[QUEUE] Order ORD-0248 added. Queue size: 248
+[QUEUE] Order ORD-0249 added. Queue size: 249
+[QUEUE] Order ORD-0250 added. Queue size: 250
+[QUEUE] Order ORD-0251 added. Queue size: 251
+[QUEUE] Order ORD-0252 added. Queue size: 252
+[QUEUE] Order ORD-0253 added. Queue size: 253
+[QUEUE] Order ORD-0254 added. Queue size: 254
+[QUEUE] Order ORD-0255 added. Queue size: 255
+[QUEUE] Order ORD-0256 added. Queue size: 256
+[QUEUE] Order ORD-0257 added. Queue size: 257
+[QUEUE] Order ORD-0258 added. Queue size: 258
+[QUEUE] Order ORD-0259 added. Queue size: 259
+[QUEUE] Order ORD-0260 added. Queue size: 260
+[QUEUE] Order ORD-0261 added. Queue size: 261
+[QUEUE] Order ORD-0262 added. Queue size: 262
+[QUEUE] Order ORD-0263 added. Queue size: 263
+[QUEUE] Order ORD-0264 added. Queue size: 264
+[QUEUE] Order ORD-0265 added. Queue size: 265
+[QUEUE] Order ORD-0266 added. Queue size: 266
+[QUEUE] Order ORD-0267 added. Queue size: 267
+[QUEUE] Order ORD-0268 added. Queue size: 268
+[QUEUE] Order ORD-0269 added. Queue size: 269
+[QUEUE] Order ORD-0270 added. Queue size: 270
+[QUEUE] Order ORD-0271 added. Queue size: 271
+[QUEUE] Order ORD-0272 added. Queue size: 272
+[QUEUE] Order ORD-0273 added. Queue size: 273
+[QUEUE] Order ORD-0274 added. Queue size: 274
+[QUEUE] Order ORD-0275 added. Queue size: 275
+[QUEUE] Order ORD-0276 added. Queue size: 276
+[QUEUE] Order ORD-0277 added. Queue size: 277
+[QUEUE] Order ORD-0278 added. Queue size: 278
+[QUEUE] Order ORD-0279 added. Queue size: 279
+[QUEUE] Order ORD-0280 added. Queue size: 280
+[QUEUE] Order ORD-0281 added. Queue size: 281
+[QUEUE] Order ORD-0282 added. Queue size: 282
+[QUEUE] Order ORD-0283 added. Queue size: 283
+[QUEUE] Order ORD-0284 added. Queue size: 284
+[QUEUE] Order ORD-0285 added. Queue size: 285
+[QUEUE] Order ORD-0286 added. Queue size: 286
+[QUEUE] Order ORD-0287 added. Queue size: 287
+[QUEUE] Order ORD-0288 added. Queue size: 288
+[QUEUE] Order ORD-0289 added. Queue size: 289
+[QUEUE] Order ORD-0290 added. Queue size: 290
+[QUEUE] Order ORD-0291 added. Queue size: 291
+[QUEUE] Order ORD-0292 added. Queue size: 292
+[QUEUE] Order ORD-0293 added. Queue size: 293
+[QUEUE] Order ORD-0294 added. Queue size: 294
+[QUEUE] Order ORD-0295 added. Queue size: 295
+[QUEUE] Order ORD-0296 added. Queue size: 296
+[QUEUE] Order ORD-0297 added. Queue size: 297
+[QUEUE] Order ORD-0298 added. Queue size: 298
+[QUEUE] Order ORD-0299 added. Queue size: 299
+[QUEUE] Order ORD-0300 added. Queue size: 300
+[QUEUE] Order ORD-0301 added. Queue size: 301
+[QUEUE] Order ORD-0302 added. Queue size: 302
+
+Starting order processing...
+
+[WORKER 3] Started
+[WORKER 1] Started
+[WORKER 3] Processing order ORD-0001
+[WORKER 1] Processing order ORD-0002
+[WORKER 6] Started
+[WORKER 4] Started
+[WORKER 6] Processing order ORD-0003
+[WORKER 4] Processing order ORD-0004
+[WORKER 5] Started
+[WORKER 5] Processing order ORD-0005
+[WORKER 2] Started
+[WORKER 2] Processing order ORD-0006
+[MAIN] Order ORD-0004 completed in 2470ms
+[WORKER 4] Completed order ORD-0004
+[WORKER 4] Processing order ORD-0007
+[MAIN] Order ORD-0001 completed in 2568ms
+[WORKER 3] Completed order ORD-0001
+[WORKER 3] Processing order ORD-0008
+[MAIN] Order ORD-0006 completed in 2765ms
+[WORKER 2] Completed order ORD-0006
+[WORKER 2] Processing order ORD-0009
+[MAIN] Order ORD-0003 completed in 3128ms
+[WORKER 6] Completed order ORD-0003
+[WORKER 6] Processing order ORD-0010
+[MAIN] Order ORD-0002 completed in 3467ms
+[WORKER 1] Completed order ORD-0002
+[WORKER 1] Processing order ORD-0011
+[MAIN] Order ORD-0005 completed in 4790ms
+[WORKER 5] Completed order ORD-0005
+[WORKER 5] Processing order ORD-0012
+[MAIN] Order ORD-0009 completed in 2525ms
+[WORKER 2] Completed order ORD-0009
+[WORKER 2] Processing order ORD-0013
+[MAIN] Order ORD-0010 completed in 2708ms
+[WORKER 6] Completed order ORD-0010
+[WORKER 6] Processing order ORD-0014
+[MAIN] Order ORD-0008 completed in 3443ms
+[WORKER 3] Completed order ORD-0008
+[WORKER 3] Processing order ORD-0015
+[MAIN] Order ORD-0011 completed in 3056ms
+[WORKER 1] Completed order ORD-0011
+[WORKER 1] Processing order ORD-0016
+[MAIN] Order ORD-0007 completed in 4194ms
+[WORKER 4] Completed order ORD-0007
+[WORKER 4] Processing order ORD-0017
+[MAIN] Order ORD-0012 completed in 2692ms
+[WORKER 5] Completed order ORD-0012
+[WORKER 5] Processing order ORD-0018
+[MAIN] Order ORD-0013 completed in 3319ms
+[WORKER 2] Completed order ORD-0013
+[WORKER 2] Processing order ORD-0019
+[MAIN] Order ORD-0014 completed in 3084ms
+[WORKER 6] Completed order ORD-0014
+[WORKER 6] Processing order ORD-0020
+[MAIN] Order ORD-0015 completed in 4179ms
+[WORKER 3] Completed order ORD-0015
+[WORKER 3] Processing order ORD-0021
+[MAIN] Order ORD-0016 completed in 4309ms
+[WORKER 1] Completed order ORD-0016
+[WORKER 1] Processing order ORD-0022
+[MAIN] Order ORD-0019 completed in 2895ms
+[WORKER 2] Completed order ORD-0019
+[WORKER 2] Processing order ORD-0023
+[MAIN] Order ORD-0017 completed in 4900ms
+[WORKER 4] Completed order ORD-0017
+[WORKER 4] Processing order ORD-0024
+[MAIN] Order ORD-0018 completed in 4449ms
+[WORKER 5] Completed order ORD-0018
+[WORKER 5] Processing order ORD-0025
+[MAIN] Order ORD-0020 completed in 3656ms
+[WORKER 6] Completed order ORD-0020
+[WORKER 6] Processing order ORD-0026
+[MAIN] Order ORD-0021 completed in 2905ms
+[WORKER 3] Completed order ORD-0021
+[WORKER 3] Processing order ORD-0027
+[MAIN] Order ORD-0026 completed in 2428ms
+[WORKER 6] Completed order ORD-0026
+[WORKER 6] Processing order ORD-0028
+[MAIN] Order ORD-0022 completed in 4238ms
+[WORKER 1] Completed order ORD-0022
+[WORKER 1] Processing order ORD-0029
+[MAIN] Order ORD-0024 completed in 3647ms
+[WORKER 4] Completed order ORD-0024
+[WORKER 4] Processing order ORD-0030
+[MAIN] Order ORD-0023 completed in 3740ms
+[WORKER 2] Completed order ORD-0023
+[WORKER 2] Processing order ORD-0031
+[MAIN] Order ORD-0027 completed in 2992ms
+[WORKER 3] Completed order ORD-0027
+[WORKER 3] Processing order ORD-0032
+[MAIN] Order ORD-0025 completed in 4766ms
+[WORKER 5] Completed order ORD-0025
+[WORKER 5] Processing order ORD-0033
+[MAIN] Order ORD-0031 completed in 4231ms
+[WORKER 2] Completed order ORD-0031
+[WORKER 2] Processing order ORD-0034
+[MAIN] Order ORD-0029 completed in 4521ms
+[WORKER 1] Completed order ORD-0029
+[WORKER 1] Processing order ORD-0035
+[MAIN] Order ORD-0028 completed in 4734ms
+[WORKER 6] Completed order ORD-0028
+[WORKER 6] Processing order ORD-0036
+[MAIN] Order ORD-0030 completed in 4851ms
+[WORKER 4] Completed order ORD-0030
+[WORKER 4] Processing order ORD-0037
+[MAIN] Order ORD-0033 completed in 3637ms
+[WORKER 5] Completed order ORD-0033
+[WORKER 5] Processing order ORD-0038
+[MAIN] Order ORD-0032 completed in 4828ms
+[WORKER 3] Completed order ORD-0032
+[WORKER 3] Processing order ORD-0039
+[MAIN] Order ORD-0037 completed in 2552ms
+[WORKER 4] Completed order ORD-0037
+[WORKER 4] Processing order ORD-0040
+[MAIN] Order ORD-0038 completed in 2327ms
+[WORKER 5] Completed order ORD-0038
+[WORKER 5] Processing order ORD-0041
+[MAIN] Order ORD-0034 completed in 3836ms
+[MAIN] Order ORD-0036 completed in 3580ms
+[WORKER 2] Completed order ORD-0034
+[WORKER 6] Completed order ORD-0036
+[WORKER 2] Processing order ORD-0042
+[WORKER 6] Processing order ORD-0043
+[MAIN] Order ORD-0035 completed in 4542ms
+[WORKER 1] Completed order ORD-0035
+[WORKER 1] Processing order ORD-0044
+[MAIN] Order ORD-0040 completed in 2916ms
+[MAIN] Order ORD-0039 completed in 4619ms
+[WORKER 4] Completed order ORD-0040
+[WORKER 3] Completed order ORD-0039
+[WORKER 4] Processing order ORD-0045
+[WORKER 3] Processing order ORD-0046
+[MAIN] Order ORD-0041 completed in 3707ms
+[WORKER 5] Completed order ORD-0041
+[WORKER 5] Processing order ORD-0047
+[MAIN] Order ORD-0044 completed in 2735ms
+[MAIN] Order ORD-0048 failed: insufficient inventory
+[WORKER 1] Completed order ORD-0044
+[WORKER 1] Processing order ORD-0049
+[MAIN] Order ORD-0043 completed in 3788ms
+[WORKER 6] Completed order ORD-0043
+[WORKER 6] Processing order ORD-0050
+[MAIN] Order ORD-0042 completed in 4173ms
+[WORKER 2] Completed order ORD-0042
+[WORKER 2] Processing order ORD-0051
+[MAIN] Order ORD-0046 completed in 2326ms
+[WORKER 3] Completed order ORD-0046
+[WORKER 3] Processing order ORD-0052
+[MAIN] Order ORD-0045 completed in 3460ms
+[WORKER 4] Completed order ORD-0045
+[WORKER 4] Processing order ORD-0053
+[MAIN] Order ORD-0047 completed in 2815ms
+[WORKER 5] Completed order ORD-0047
+[WORKER 5] Processing order ORD-0054
+[MAIN] Order ORD-0049 completed in 2778ms
+[WORKER 1] Completed order ORD-0049
+[WORKER 1] Processing order ORD-0055
+[MAIN] Order ORD-0051 completed in 2340ms
+[WORKER 2] Completed order ORD-0051
+[WORKER 2] Processing order ORD-0056
+[MAIN] Order ORD-0052 completed in 2797ms
+[WORKER 3] Completed order ORD-0052
+[WORKER 3] Processing order ORD-0057
+[MAIN] Order ORD-0054 completed in 2053ms
+[WORKER 5] Completed order ORD-0054
+[WORKER 5] Processing order ORD-0058
+[MAIN] Order ORD-0050 completed in 4220ms
+[MAIN] Order ORD-0059 failed: insufficient inventory
+[WORKER 6] Completed order ORD-0050
+[WORKER 6] Processing order ORD-0060
+[MAIN] Order ORD-0053 completed in 3364ms
+[WORKER 4] Completed order ORD-0053
+[WORKER 4] Processing order ORD-0061
+[MAIN] Order ORD-0057 completed in 2305ms
+[WORKER 3] Completed order ORD-0057
+[WORKER 3] Processing order ORD-0062
+[MAIN] Order ORD-0055 completed in 3972ms
+[WORKER 1] Completed order ORD-0055
+[WORKER 1] Processing order ORD-0063
+[MAIN] Order ORD-0056 completed in 3875ms
+[MAIN] Order ORD-0064 failed: insufficient inventory
+[WORKER 2] Completed order ORD-0056
+[WORKER 2] Processing order ORD-0065
+[MAIN] Order ORD-0060 completed in 2698ms
+[WORKER 6] Completed order ORD-0060
+[WORKER 6] Processing order ORD-0066
+[MAIN] Order ORD-0061 completed in 2644ms
+[MAIN] Order ORD-0067 failed: insufficient inventory
+[MAIN] Order ORD-0068 failed: insufficient inventory
+[WORKER 4] Completed order ORD-0061
+[WORKER 4] Processing order ORD-0069
+[MAIN] Order ORD-0058 completed in 4025ms
+[WORKER 5] Completed order ORD-0058
+[WORKER 5] Processing order ORD-0070
+[MAIN] Order ORD-0065 completed in 2411ms
+[MAIN] Order ORD-0071 failed: insufficient inventory
+[WORKER 2] Completed order ORD-0065
+[WORKER 2] Processing order ORD-0072
+[MAIN] Order ORD-0063 completed in 2869ms
+[MAIN] Order ORD-0073 failed: insufficient inventory
+[MAIN] Order ORD-0074 failed: insufficient inventory
+[MAIN] Order ORD-0075 failed: insufficient inventory
+[MAIN] Order ORD-0076 failed: insufficient inventory
+[MAIN] Order ORD-0077 failed: insufficient inventory
+[MAIN] Order ORD-0078 failed: insufficient inventory
+[MAIN] Order ORD-0079 failed: insufficient inventory
+[MAIN] Order ORD-0080 failed: insufficient inventory
+[MAIN] Order ORD-0081 failed: insufficient inventory
+[MAIN] Order ORD-0082 failed: insufficient inventory
+[MAIN] Order ORD-0083 failed: insufficient inventory
+[WORKER 1] Completed order ORD-0063
+[WORKER 1] Processing order ORD-0084
+[MAIN] Order ORD-0062 completed in 3647ms
+[WORKER 3] Completed order ORD-0062
+[WORKER 3] Processing order ORD-0085
+[MAIN] Order ORD-0066 completed in 2843ms
+[MAIN] Order ORD-0086 failed: insufficient inventory
+[MAIN] Order ORD-0087 failed: insufficient inventory
+[WORKER 6] Completed order ORD-0066
+[WORKER 6] Processing order ORD-0088
+[MAIN] Order ORD-0069 completed in 3619ms
+[MAIN] Order ORD-0089 failed: insufficient inventory
+[MAIN] Order ORD-0090 failed: insufficient inventory
+[WORKER 4] Completed order ORD-0069
+[WORKER 4] Processing order ORD-0091
+[MAIN] Order ORD-0084 completed in 2708ms
+[MAIN] Order ORD-0092 failed: insufficient inventory
+[WORKER 1] Completed order ORD-0084
+[WORKER 1] Processing order ORD-0093
+[MAIN] Order ORD-0088 completed in 2722ms
+[WORKER 6] Completed order ORD-0088
+[WORKER 6] Processing order ORD-0094
+[MAIN] Order ORD-0072 completed in 3605ms
+[MAIN] Order ORD-0095 failed: insufficient inventory
+[MAIN] Order ORD-0096 failed: insufficient inventory
+[WORKER 2] Completed order ORD-0072
+[WORKER 2] Processing order ORD-0097
+[MAIN] Order ORD-0070 completed in 4702ms
+[MAIN] Order ORD-0098 failed: insufficient inventory
+[MAIN] Order ORD-0099 failed: insufficient inventory
+[WORKER 5] Completed order ORD-0070
+[WORKER 5] Processing order ORD-0100
+[MAIN] Order ORD-0085 completed in 4151ms
+[MAIN] Order ORD-0101 failed: insufficient inventory
+[MAIN] Order ORD-0102 failed: insufficient inventory
+[MAIN] Order ORD-0103 failed: insufficient inventory
+[MAIN] Order ORD-0104 failed: insufficient inventory
+[MAIN] Order ORD-0105 failed: insufficient inventory
+[WORKER 3] Completed order ORD-0085
+[WORKER 3] Processing order ORD-0106
+[MAIN] Order ORD-0091 completed in 2623ms
+[MAIN] Order ORD-0107 failed: insufficient inventory
+[MAIN] Order ORD-0108 failed: insufficient inventory
+[MAIN] Order ORD-0109 failed: insufficient inventory
+[MAIN] Order ORD-0110 failed: insufficient inventory
+[MAIN] Order ORD-0111 failed: insufficient inventory
+[MAIN] Order ORD-0112 failed: insufficient inventory
+[WORKER 4] Completed order ORD-0091
+[WORKER 4] Processing order ORD-0113
+[MAIN] Order ORD-0097 completed in 2051ms
+[WORKER 2] Completed order ORD-0097
+[WORKER 2] Processing order ORD-0114
+[MAIN] Order ORD-0100 completed in 3132ms
+[WORKER 5] Completed order ORD-0100
+[WORKER 5] Processing order ORD-0115
+[MAIN] Order ORD-0093 completed in 4020ms
+[WORKER 1] Completed order ORD-0093
+[WORKER 1] Processing order ORD-0116
+[MAIN] Order ORD-0094 completed in 4136ms
+[MAIN] Order ORD-0117 failed: insufficient inventory
+[MAIN] Order ORD-0118 failed: insufficient inventory
+[MAIN] Order ORD-0119 failed: insufficient inventory
+[MAIN] Order ORD-0120 failed: insufficient inventory
+[MAIN] Order ORD-0121 failed: insufficient inventory
+[MAIN] Order ORD-0122 failed: insufficient inventory
+[MAIN] Order ORD-0123 failed: insufficient inventory
+[MAIN] Order ORD-0124 failed: insufficient inventory
+[MAIN] Order ORD-0125 failed: insufficient inventory
+[MAIN] Order ORD-0126 failed: insufficient inventory
+[MAIN] Order ORD-0127 failed: insufficient inventory
+[MAIN] Order ORD-0128 failed: insufficient inventory
+[MAIN] Order ORD-0129 failed: insufficient inventory
+[MAIN] Order ORD-0130 failed: insufficient inventory
+[MAIN] Order ORD-0131 failed: insufficient inventory
+[MAIN] Order ORD-0132 failed: insufficient inventory
+[MAIN] Order ORD-0133 failed: insufficient inventory
+[MAIN] Order ORD-0134 failed: insufficient inventory
+[MAIN] Order ORD-0135 failed: insufficient inventory
+[MAIN] Order ORD-0136 failed: insufficient inventory
+[MAIN] Order ORD-0137 failed: insufficient inventory
+[MAIN] Order ORD-0138 failed: insufficient inventory
+[MAIN] Order ORD-0139 failed: insufficient inventory
+[MAIN] Order ORD-0140 failed: insufficient inventory
+[MAIN] Order ORD-0141 failed: insufficient inventory
+[MAIN] Order ORD-0142 failed: insufficient inventory
+[MAIN] Order ORD-0143 failed: insufficient inventory
+[MAIN] Order ORD-0144 failed: insufficient inventory
+[MAIN] Order ORD-0145 failed: insufficient inventory
+[MAIN] Order ORD-0146 failed: insufficient inventory
+[MAIN] Order ORD-0147 failed: insufficient inventory
+[MAIN] Order ORD-0148 failed: insufficient inventory
+[MAIN] Order ORD-0149 failed: insufficient inventory
+[MAIN] Order ORD-0150 failed: insufficient inventory
+[MAIN] Order ORD-0151 failed: insufficient inventory
+[MAIN] Order ORD-0152 failed: insufficient inventory
+[MAIN] Order ORD-0153 failed: insufficient inventory
+[MAIN] Order ORD-0154 failed: insufficient inventory
+[MAIN] Order ORD-0155 failed: insufficient inventory
+[MAIN] Order ORD-0156 failed: insufficient inventory
+[MAIN] Order ORD-0157 failed: insufficient inventory
+[MAIN] Order ORD-0158 failed: insufficient inventory
+[MAIN] Order ORD-0159 failed: insufficient inventory
+[MAIN] Order ORD-0160 failed: insufficient inventory
+[MAIN] Order ORD-0161 failed: insufficient inventory
+[MAIN] Order ORD-0162 failed: insufficient inventory
+[MAIN] Order ORD-0163 failed: insufficient inventory
+[MAIN] Order ORD-0164 failed: insufficient inventory
+[MAIN] Order ORD-0165 failed: insufficient inventory
+[MAIN] Order ORD-0166 failed: insufficient inventory
+[MAIN] Order ORD-0167 failed: insufficient inventory
+[MAIN] Order ORD-0168 failed: insufficient inventory
+[MAIN] Order ORD-0169 failed: insufficient inventory
+[MAIN] Order ORD-0170 failed: insufficient inventory
+[MAIN] Order ORD-0171 failed: insufficient inventory
+[MAIN] Order ORD-0172 failed: insufficient inventory
+[MAIN] Order ORD-0173 failed: insufficient inventory
+[MAIN] Order ORD-0174 failed: insufficient inventory
+[MAIN] Order ORD-0175 failed: insufficient inventory
+[MAIN] Order ORD-0176 failed: insufficient inventory
+[MAIN] Order ORD-0177 failed: insufficient inventory
+[MAIN] Order ORD-0178 failed: insufficient inventory
+[MAIN] Order ORD-0179 failed: insufficient inventory
+[MAIN] Order ORD-0180 failed: insufficient inventory
+[MAIN] Order ORD-0181 failed: insufficient inventory
+[MAIN] Order ORD-0182 failed: insufficient inventory
+[MAIN] Order ORD-0183 failed: insufficient inventory
+[MAIN] Order ORD-0184 failed: insufficient inventory
+[MAIN] Order ORD-0185 failed: insufficient inventory
+[MAIN] Order ORD-0186 failed: insufficient inventory
+[MAIN] Order ORD-0187 failed: insufficient inventory
+[MAIN] Order ORD-0188 failed: insufficient inventory
+[MAIN] Order ORD-0189 failed: insufficient inventory
+[MAIN] Order ORD-0190 failed: insufficient inventory
+[MAIN] Order ORD-0191 failed: insufficient inventory
+[MAIN] Order ORD-0192 failed: insufficient inventory
+[MAIN] Order ORD-0193 failed: insufficient inventory
+[MAIN] Order ORD-0194 failed: insufficient inventory
+[MAIN] Order ORD-0195 failed: insufficient inventory
+[MAIN] Order ORD-0196 failed: insufficient inventory
+[MAIN] Order ORD-0197 failed: insufficient inventory
+[MAIN] Order ORD-0198 failed: insufficient inventory
+[MAIN] Order ORD-0199 failed: insufficient inventory
+[MAIN] Order ORD-0200 failed: insufficient inventory
+[MAIN] Order ORD-0201 failed: insufficient inventory
+[MAIN] Order ORD-0202 failed: insufficient inventory
+[MAIN] Order ORD-0203 failed: insufficient inventory
+[MAIN] Order ORD-0204 failed: insufficient inventory
+[MAIN] Order ORD-0205 failed: insufficient inventory
+[MAIN] Order ORD-0206 failed: insufficient inventory
+[MAIN] Order ORD-0207 failed: insufficient inventory
+[MAIN] Order ORD-0208 failed: insufficient inventory
+[MAIN] Order ORD-0209 failed: insufficient inventory
+[MAIN] Order ORD-0210 failed: insufficient inventory
+[MAIN] Order ORD-0211 failed: insufficient inventory
+[MAIN] Order ORD-0212 failed: insufficient inventory
+[MAIN] Order ORD-0213 failed: insufficient inventory
+[MAIN] Order ORD-0214 failed: insufficient inventory
+[MAIN] Order ORD-0215 failed: insufficient inventory
+[MAIN] Order ORD-0216 failed: insufficient inventory
+[MAIN] Order ORD-0217 failed: insufficient inventory
+[MAIN] Order ORD-0218 failed: insufficient inventory
+[MAIN] Order ORD-0219 failed: insufficient inventory
+[MAIN] Order ORD-0220 failed: insufficient inventory
+[MAIN] Order ORD-0221 failed: insufficient inventory
+[MAIN] Order ORD-0222 failed: insufficient inventory
+[MAIN] Order ORD-0223 failed: insufficient inventory
+[MAIN] Order ORD-0224 failed: insufficient inventory
+[MAIN] Order ORD-0225 failed: insufficient inventory
+[MAIN] Order ORD-0226 failed: insufficient inventory
+[MAIN] Order ORD-0227 failed: insufficient inventory
+[MAIN] Order ORD-0228 failed: insufficient inventory
+[MAIN] Order ORD-0229 failed: insufficient inventory
+[MAIN] Order ORD-0230 failed: insufficient inventory
+[MAIN] Order ORD-0231 failed: insufficient inventory
+[MAIN] Order ORD-0232 failed: insufficient inventory
+[MAIN] Order ORD-0233 failed: insufficient inventory
+[MAIN] Order ORD-0234 failed: insufficient inventory
+[MAIN] Order ORD-0235 failed: insufficient inventory
+[MAIN] Order ORD-0236 failed: insufficient inventory
+[MAIN] Order ORD-0237 failed: insufficient inventory
+[MAIN] Order ORD-0238 failed: insufficient inventory
+[MAIN] Order ORD-0239 failed: insufficient inventory
+[MAIN] Order ORD-0240 failed: insufficient inventory
+[MAIN] Order ORD-0241 failed: insufficient inventory
+[MAIN] Order ORD-0242 failed: insufficient inventory
+[MAIN] Order ORD-0243 failed: insufficient inventory
+[MAIN] Order ORD-0244 failed: insufficient inventory
+[MAIN] Order ORD-0245 failed: insufficient inventory
+[MAIN] Order ORD-0246 failed: insufficient inventory
+[MAIN] Order ORD-0247 failed: insufficient inventory
+[MAIN] Order ORD-0248 failed: insufficient inventory
+[MAIN] Order ORD-0249 failed: insufficient inventory
+[MAIN] Order ORD-0250 failed: insufficient inventory
+[MAIN] Order ORD-0251 failed: insufficient inventory
+[MAIN] Order ORD-0252 failed: insufficient inventory
+[MAIN] Order ORD-0253 failed: insufficient inventory
+[MAIN] Order ORD-0254 failed: insufficient inventory
+[MAIN] Order ORD-0255 failed: insufficient inventory
+[MAIN] Order ORD-0256 failed: insufficient inventory
+[MAIN] Order ORD-0257 failed: insufficient inventory
+[MAIN] Order ORD-0258 failed: insufficient inventory
+[MAIN] Order ORD-0259 failed: insufficient inventory
+[MAIN] Order ORD-0260 failed: insufficient inventory
+[MAIN] Order ORD-0261 failed: insufficient inventory
+[MAIN] Order ORD-0262 failed: insufficient inventory
+[MAIN] Order ORD-0263 failed: insufficient inventory
+[MAIN] Order ORD-0264 failed: insufficient inventory
+[MAIN] Order ORD-0265 failed: insufficient inventory
+[MAIN] Order ORD-0266 failed: insufficient inventory
+[MAIN] Order ORD-0267 failed: insufficient inventory
+[MAIN] Order ORD-0268 failed: insufficient inventory
+[MAIN] Order ORD-0269 failed: insufficient inventory
+[MAIN] Order ORD-0270 failed: insufficient inventory
+[MAIN] Order ORD-0271 failed: insufficient inventory
+[MAIN] Order ORD-0272 failed: insufficient inventory
+[MAIN] Order ORD-0273 failed: insufficient inventory
+[MAIN] Order ORD-0274 failed: insufficient inventory
+[MAIN] Order ORD-0275 failed: insufficient inventory
+[MAIN] Order ORD-0276 failed: insufficient inventory
+[MAIN] Order ORD-0277 failed: insufficient inventory
+[MAIN] Order ORD-0278 failed: insufficient inventory
+[MAIN] Order ORD-0279 failed: insufficient inventory
+[MAIN] Order ORD-0280 failed: insufficient inventory
+[MAIN] Order ORD-0281 failed: insufficient inventory
+[MAIN] Order ORD-0282 failed: insufficient inventory
+[MAIN] Order ORD-0283 failed: insufficient inventory
+[MAIN] Order ORD-0284 failed: insufficient inventory
+[MAIN] Order ORD-0285 failed: insufficient inventory
+[MAIN] Order ORD-0286 failed: insufficient inventory
+[MAIN] Order ORD-0287 failed: insufficient inventory
+[MAIN] Order ORD-0288 failed: insufficient inventory
+[MAIN] Order ORD-0289 failed: insufficient inventory
+[MAIN] Order ORD-0290 failed: insufficient inventory
+[MAIN] Order ORD-0291 failed: insufficient inventory
+[MAIN] Order ORD-0292 failed: insufficient inventory
+[MAIN] Order ORD-0293 failed: insufficient inventory
+[MAIN] Order ORD-0294 failed: insufficient inventory
+[MAIN] Order ORD-0295 failed: insufficient inventory
+[MAIN] Order ORD-0296 failed: insufficient inventory
+[MAIN] Order ORD-0297 failed: insufficient inventory
+[MAIN] Order ORD-0298 failed: insufficient inventory
+[MAIN] Order ORD-0299 failed: insufficient inventory
+[MAIN] Order ORD-0300 failed: insufficient inventory
+[MAIN] Order ORD-0301 failed: insufficient inventory
+[MAIN] Order ORD-0302 failed: insufficient inventory
+[WORKER 6] Completed order ORD-0094
+[MAIN] Order ORD-0113 completed in 3583ms
+[WORKER 4] Completed order ORD-0113
+[MAIN] Order ORD-0106 completed in 4741ms
+[WORKER 3] Completed order ORD-0106
+[MAIN] Order ORD-0114 completed in 4423ms
+[WORKER 2] Completed order ORD-0114
+[MAIN] Order ORD-0116 completed in 2983ms
+[WORKER 1] Completed order ORD-0116
+[MAIN] Order ORD-0115 completed in 4831ms
+[WORKER 5] Completed order ORD-0115
+[WORKER 1] Shutting down
+[WORKER 5] Shutting down
+[WORKER 2] Shutting down
+[WORKER 4] Shutting down
+[WORKER 3] Shutting down
+[WORKER 6] Shutting down
+[MAIN] Worker exited. (1/6)
+[MAIN] Worker exited. (2/6)
+[MAIN] Worker exited. (3/6)
+[MAIN] Worker exited. (4/6)
+[MAIN] Worker exited. (5/6)
+[MAIN] Worker exited. (6/6)
+
+========== FINAL REPORT ==========
+Total orders: 302
+Total processed: 302
+Completed: 79
+Failed: 223
+Pending: 0
+Average successful processing time: 3472.94ms
+Average failed worker processing time: 0.00ms
+Total execution time: 48026ms
+
+Final Inventory:
+┌─────────┬────────────┬───────┬──────────┬───────────┐
+│ (index) │ productId  │ stock │ reserved │ available │
+├─────────┼────────────┼───────┼──────────┼───────────┤
+│ 0       │ 'PROD-001' │ 0     │ 0        │ 0         │
+│ 1       │ 'PROD-002' │ 0     │ 0        │ 0         │
+│ 2       │ 'PROD-003' │ 0     │ 0        │ 0         │
+└─────────┴────────────┴───────┴──────────┴───────────┘
