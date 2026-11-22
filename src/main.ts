@@ -9,32 +9,45 @@ import {
   WorkerToMainMessage
 } from "./workers/worker.types";
 import { InventoryManager } from "./inventory/inventory.manager";
+import { generateOrders } from "./services/order-generator";
 
 const WORKER_COUNT = 6;
 
 const queue = new OrderQueue();
 
-const orders: Order[] = Array.from(
-  { length: 15 },
-  (_, index) => ({
-    id: `ORD-${String(index + 1).padStart(3, "0")}`,
-    customerId: `CUS-${String(index + 1).padStart(3, "0")}`,
-    productId: "PROD-001",
-    quantity: 1,
-    createdAt: new Date(),
-    status: "PENDING"
-  })
+const CUSTOMER_COUNT = 100;
+
+const orders = generateOrders(CUSTOMER_COUNT);
+
+console.log(
+  `[MAIN] Generated ${orders.length} orders from ${CUSTOMER_COUNT} customers`
 );
-const processingTimes: number[] = [];
+
+const completedProcessingTimes: number[] = [];
+
+const failedProcessingTimes: number[] = [];
 
 const inventoryManager = new InventoryManager([
   {
     id: "PROD-001",
     name: "Laptop",
     price: 50000,
-    stock: 10
+    stock: 50
+  },
+  {
+    id: "PROD-002",
+    name: "Mouse",
+    price: 1000,
+    stock: 100
+  },
+  {
+    id: "PROD-003",
+    name: "Keyboard",
+    price: 2000,
+    stock: 75
   }
 ]);
+
 // Add all orders before starting workers.
 orders.forEach((order) => queue.enqueue(order));
 
@@ -51,6 +64,7 @@ const workerFile = path.join(
 const workers: Worker[] = [];
 
 const startedAt = Date.now();
+
 
 function dispatchOrder(worker: Worker): void {
   const order = queue.dequeue();
@@ -92,7 +106,7 @@ function handleWorkerMessage(
         order.status = "COMPLETED";
       }
 
-      processingTimes.push(message.processingTime);
+      completedProcessingTimes.push(message.processingTime);
 
       console.log(
         `[MAIN] Order ${message.orderId} completed in ${message.processingTime}ms`
@@ -108,7 +122,7 @@ function handleWorkerMessage(
         order.status = "FAILED";
       }
 
-      processingTimes.push(message.processingTime);
+      failedProcessingTimes.push(message.processingTime);
 
       console.error(
         `[MAIN] Order ${message.orderId} failed: ${message.error}`
@@ -183,28 +197,39 @@ async function main(): Promise<void> {
 
   const totalProcessed = completed + failed;
 
-  const totalWorkerProcessingTime = processingTimes.reduce(
-    (total, time) => total + time,
-    0
-  );
+  const totalSuccessfulProcessingTime =
+    completedProcessingTimes.reduce((sum, time) => sum + time, 0);
 
-  const averageProcessingTime =
-    totalProcessed > 0
-      ? totalWorkerProcessingTime / totalProcessed
+  const averageSuccessfulProcessingTime =
+    completed > 0
+      ? totalSuccessfulProcessingTime / completed
       : 0;
+
+  const averageFailedAttemptTime =
+    failed > 0
+      ? failedProcessingTimes.reduce((sum, time) => sum + time, 0) / failed
+      : 0;
+
+  const totalExecutionTime = Date.now() - startedAt;
+
   console.log("\n========== FINAL REPORT ==========");
   console.log(`Total orders: ${orders.length}`);
+  console.log(`Total processed: ${totalProcessed}`);
   console.log(`Completed: ${completed}`);
   console.log(`Failed: ${failed}`);
   console.log(`Pending: ${pending}`);
-  console.log("==================================");
-  console.log(`Total processed: ${totalProcessed}`);
+
   console.log(
-    `Total worker processing time: ${totalWorkerProcessingTime}ms`
+    `Average successful processing time: ${averageSuccessfulProcessingTime.toFixed(2)}ms`
   );
+
   console.log(
-    `Average processing time: ${averageProcessingTime.toFixed(2)}ms`
+    `Average failed attempt time: ${averageFailedAttemptTime.toFixed(2)}ms`
   );
+
+
+  console.log(`Total execution time: ${totalExecutionTime}ms`);
+
   console.log("\nFinal Inventory:");
   console.table(inventoryManager.getSnapshot());
 }
