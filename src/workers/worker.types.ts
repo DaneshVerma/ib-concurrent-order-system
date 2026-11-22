@@ -4,6 +4,7 @@ export type MainToWorkerMessage =
   | {
       type: "PROCESS";
       order: Order;
+      inventoryIndex: number;
     }
   | {
       type: "STOP";

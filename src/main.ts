@@ -8,6 +8,7 @@ import {
   MainToWorkerMessage,
   WorkerToMainMessage
 } from "./workers/worker.types";
+import { InventoryManager } from "./inventory/inventory.manager";
 
 const WORKER_COUNT = 6;
 
@@ -24,7 +25,16 @@ const orders: Order[] = Array.from(
     status: "PENDING"
   })
 );
+const processingTimes: number[] = [];
 
+const inventoryManager = new InventoryManager([
+  {
+    id: "PROD-001",
+    name: "Laptop",
+    price: 50000,
+    stock: 10
+  }
+]);
 // Add all orders before starting workers.
 orders.forEach((order) => queue.enqueue(order));
 
@@ -58,7 +68,8 @@ function dispatchOrder(worker: Worker): void {
 
   const message: MainToWorkerMessage = {
     type: "PROCESS",
-    order
+    order,
+    inventoryIndex: inventoryManager.getProductIndex(order.productId)
   };
 
   worker.postMessage(message);
@@ -81,6 +92,8 @@ function handleWorkerMessage(
         order.status = "COMPLETED";
       }
 
+      processingTimes.push(message.processingTime);
+
       console.log(
         `[MAIN] Order ${message.orderId} completed in ${message.processingTime}ms`
       );
@@ -94,6 +107,8 @@ function handleWorkerMessage(
       if (order) {
         order.status = "FAILED";
       }
+
+      processingTimes.push(message.processingTime);
 
       console.error(
         `[MAIN] Order ${message.orderId} failed: ${message.error}`
@@ -110,8 +125,11 @@ function startWorkers(): Promise<void> {
     let hasFailed = false;
 
     for (let i = 0; i < WORKER_COUNT; i++) {
-      const worker = new Worker(workerFile);
-
+      const worker = new Worker(workerFile, {
+        workerData: {
+          inventoryBuffer: inventoryManager.getSharedBuffer()
+        }
+      });
       workers.push(worker);
 
       worker.on("message", (message: WorkerToMainMessage) => {
@@ -151,8 +169,6 @@ async function main(): Promise<void> {
 
   await startWorkers();
 
-  const totalTime = Date.now() - startedAt;
-
   const completed = orders.filter(
     (order) => order.status === "COMPLETED"
   ).length;
@@ -165,13 +181,32 @@ async function main(): Promise<void> {
     (order) => order.status === "PENDING"
   ).length;
 
+  const totalProcessed = completed + failed;
+
+  const totalWorkerProcessingTime = processingTimes.reduce(
+    (total, time) => total + time,
+    0
+  );
+
+  const averageProcessingTime =
+    totalProcessed > 0
+      ? totalWorkerProcessingTime / totalProcessed
+      : 0;
   console.log("\n========== FINAL REPORT ==========");
   console.log(`Total orders: ${orders.length}`);
   console.log(`Completed: ${completed}`);
   console.log(`Failed: ${failed}`);
   console.log(`Pending: ${pending}`);
-  console.log(`Total processing time: ${totalTime}ms`);
   console.log("==================================");
+  console.log(`Total processed: ${totalProcessed}`);
+  console.log(
+    `Total worker processing time: ${totalWorkerProcessingTime}ms`
+  );
+  console.log(
+    `Average processing time: ${averageProcessingTime.toFixed(2)}ms`
+  );
+  console.log("\nFinal Inventory:");
+  console.table(inventoryManager.getSnapshot());
 }
 
 main().catch((error) => {
